@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2>Active Listings</h2>
+<form action="{% url 'displayC' %}" method="post">
+    {% csrf_token %}
+    <select class="form-select" aria-label="Default select example" name="categorey">
+        <option selected>Chose a catagorey</option>
+        {% for cat in categories %}
+        <option value="{{cat}}">{{cat}}</option>
+        {% endfor %}
+    </select>
+    <button class="btn-primary">Submit</button>
+</form>
+<div class="row mx-3">
+    {% for list in Lists %}
+    <div class="card mx-3" style="width: 18rem;">
+        <img src="{{ list.img_url }}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ list.title }}</h5>
+            <p class="card-text">{{ list.description }}.</p>
+            <p class="card-text">Price: {{ list.price }}$</p>
+            <a href="{% url 'listing' id=list.id %}" class="btn btn-primary">details</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
